@@ -13,9 +13,17 @@ import Entretenimiento from "./pages/categorias/Entretenimiento";
 import Atracciones from "./pages/categorias/Atracciones";
 import Dashboard from "./pages/Dashboard";
 
-// 👉 Importa el formulario de lugares y el perfil
+// ✨ Sistema de notificaciones con animación
+import { Toaster } from "react-hot-toast";
+
+// 👉 Formularios y páginas adicionales
 import LugaresForm from "./pages/LugaresForm";
 import Profile from "./pages/profile";
+
+// 📰 Blog
+import PostList from "./pages/blog/PostList";
+import PostDetail from "./pages/blog/PostDetail";
+import CreatePost from "./pages/blog/createpost";
 
 function App() {
   return (
@@ -33,7 +41,7 @@ function App() {
           <Link to="/registro" className="hover:text-pink-600">Registro</Link>
           <Link to="/login" className="hover:text-pink-600">Login</Link>
           <Link to="/conocenos" className="hover:text-pink-600">Conócenos</Link>
-         
+          <Link to="/blog" className="hover:text-pink-600">Blog</Link>
         </nav>
       </header>
 
@@ -64,9 +72,67 @@ function App() {
         {/* Formulario de lugares */}
         <Route path="/lugaresform" element={<LugaresForm />} />
 
-        {/* Fallback para rutas no encontradas */}
-        <Route path="*" element={<h1 className="text-center text-2xl mt-20">Página no encontrada</h1>} />
+        {/* Blog */}
+        <Route path="/blog" element={<PostList />} />
+        <Route path="/blog/post/:id" element={<PostDetail />} />
+        <Route path="/blog/create" element={<CreatePost />} />
+
+        {/* Fallback */}
+        <Route
+          path="*"
+          element={
+            <h1 className="text-center text-2xl mt-20 text-pink-600">
+              Página no encontrada 💭
+            </h1>
+          }
+        />
       </Routes>
+
+      {/* 🌸 Toaster con animación fade y duración extendida */}
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 6000,
+          style: {
+            background: "#fff0f6",
+            color: "#d63384",
+            border: "1px solid #f0a6c5",
+            fontWeight: "bold",
+            padding: "12px 18px",
+            borderRadius: "12px",
+            boxShadow: "0 4px 14px rgba(0,0,0,0.1)",
+            transition: "all 0.4s ease-in-out",
+          },
+          iconTheme: {
+            primary: "#ec4899",
+            secondary: "#fff",
+          },
+        }}
+        containerStyle={{
+          top: 80,
+          right: 20,
+        }}
+      />
+      <style>{`
+        /* 🌸 Animación suave */
+        .react-hot-toast {
+          opacity: 0;
+          transform: translateY(-10px);
+          animation: fadeIn 0.5s ease forwards, fadeOut 0.5s ease 5.5s forwards;
+        }
+        @keyframes fadeIn {
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes fadeOut {
+          to {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+        }
+      `}</style>
     </Router>
   );
 }
